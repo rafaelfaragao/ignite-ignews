@@ -1,9 +1,30 @@
-import styles from '../styles/home.module.scss'
+import Head from 'next/head';
+import React from 'react';
+
+import { SubscribeButton } from '../components/SubscribeButton';
+
+import styles from './home.module.scss';
 
 export default function Home() {
   return (
-    <h1 className={styles.title}>
-      Hello World só que em NextJS agora!
-    </h1>
+    <>
+      <Head>
+        <title>home | ig.news</title>
+      </Head>
+
+      <main className={styles.contentContainer}>
+        <section className={styles.hero}>
+          <span>👏 Hey, welcome</span>
+          <h1>News about the <span>React</span> World.</h1>
+          <p>
+            Get access to all the publications <br />
+            <span>for $9.90 month</span>
+          </p>
+          <SubscribeButton />
+        </section>
+
+        <img src="/images/avatar.svg" alt="Girl coding" />
+      </main>
+    </>
   )
 }
