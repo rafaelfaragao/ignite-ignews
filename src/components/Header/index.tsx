@@ -7,7 +7,7 @@ export function Header(){
         <div className={styles.headerContent}>
           <img src="/images/logo.svg" alt="ign.ews" />
           <nav>
-            <a className={styles.active}>Home</a>
+            <a href="/"className={styles.active}>Home</a>
             <a>Posts</a>
           </nav>
 
