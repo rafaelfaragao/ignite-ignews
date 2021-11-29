@@ -5,16 +5,17 @@
 }
 
 :root {
-  --white: #FFFFFF;
-  
+  --white: #ffffff;
+
   --gray-100: #e1e1e6;
   --gray-300: #a8a8b3;
+  --gray-700: #323238;
   --gray-800: #29292e;
-  --gray-900: #1F2729;
-  
-  --yellow-500: #EBA417;
-  --cyan-500: #61DCFB;
-  --green: #04D361;
+  --gray-900: #1f2729;
+
+  --yellow-500: #eba417;
+  --cyan-500: #61dcfb;
+  --green: #04d361;
 
   --background: #121414;
 }
@@ -36,7 +37,11 @@ body {
   color: var(--white);
 }
 
-body, input, textarea, select, button {
+body,
+input,
+textarea,
+select,
+button {
   font: 400 1rem "Roboto", sans-serif;
 }
 

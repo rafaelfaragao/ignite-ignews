@@ -8,7 +8,7 @@ export function Header(){
           <img src="/images/logo.svg" alt="ign.ews" />
           <nav>
             <a href="/"className={styles.active}>Home</a>
-            <a>Posts</a>
+            <a href="/posts">Posts</a>
           </nav>
 
           <SignInButton />
