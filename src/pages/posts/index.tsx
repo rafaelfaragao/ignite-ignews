@@ -2,10 +2,23 @@ import { GetStaticProps } from 'next';
 import Head from 'next/head';
 import Prismic from '@prismicio/client';
 import { getPrismicClient } from '../../services/prismic';
+import { RichText } from 'prismic-dom';
+
 
 import styles from './styles.module.scss';
 
-export default function Posts(){
+type Post = { //tipagem para o array
+  slug: string;
+  title: string;
+  excerpt: string;
+  updatedAt: string;
+}
+
+interface PostsProps { //props dos posts, como array de post
+  posts: Post[]
+}
+
+export default function Posts({posts}: PostsProps){
   return(
     <>
       <Head>
@@ -14,21 +27,13 @@ export default function Posts(){
 
       <main className={styles.container}>
         <div className={styles.posts}>
-          <a href="#">
-            <time>25 de novembro de 2021</time>
-            <strong>Obtendo o status de progresso do envio de dados com Axios</strong>
-            <p>Vamos mostrar na prática como obter o progresso de cada requisição HTTP sendo feita através do método POST, do front end para o back end utilizando o Axios.</p>
-          </a>
-          <a href="#">
-            <time>25 de novembro de 2021</time>
-            <strong>Obtendo o status de progresso do envio de dados com Axios</strong>
-            <p>Vamos mostrar na prática como obter o progresso de cada requisição HTTP sendo feita através do método POST, do front end para o back end utilizando o Axios.</p>
-          </a>
-          <a href="#">
-            <time>25 de novembro de 2021</time>
-            <strong>Obtendo o status de progresso do envio de dados com Axios</strong>
-            <p>Vamos mostrar na prática como obter o progresso de cada requisição HTTP sendo feita através do método POST, do front end para o back end utilizando o Axios.</p>
-          </a>
+          {posts.map(post => ( //no MAP pode usar parenteses ao inves de chaves quando o retorno é html
+            <a key={post.slug} href="#">
+              <time>{post.updatedAt}</time>
+              <strong>{post.title}</strong>
+              <p>{post.excerpt}</p>
+            </a>
+          ))}
         </div>
       </main>
     </>
@@ -45,9 +50,24 @@ export const getStaticProps: GetStaticProps = async () => {
     pageSize: 100,
   })
 
-  console.log(JSON.stringify(response, null, 2));
+  const posts = response.results.map(post => {
+    return {
+      slug: post.uid,
+      title: RichText.asText(post.data.title),
+      excerpt: post.data.content.find(content => content.type === 'paragraph')?.text ?? '',
+      updatedAt: new Date(post.last_publication_date).toLocaleDateString('pt-BR', {
+        day: '2-digit',
+        month: 'long',
+        year: 'numeric',
+      })
+
+    }
+  })
+
+  // console.log(JSON.stringify(response, null, 2));
+  console.log(posts)
 
   return { 
-    props: {}
+    props: { posts }
   }
 }
