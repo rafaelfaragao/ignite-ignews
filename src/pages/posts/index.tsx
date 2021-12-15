@@ -3,6 +3,7 @@ import Head from 'next/head';
 import Prismic from '@prismicio/client';
 import { getPrismicClient } from '../../services/prismic';
 import { RichText } from 'prismic-dom';
+import Link from 'next/link';
 
 
 import styles from './styles.module.scss';
@@ -28,11 +29,13 @@ export default function Posts({posts}: PostsProps){
       <main className={styles.container}>
         <div className={styles.posts}>
           {posts.map(post => ( //no MAP pode usar parenteses ao inves de chaves quando o retorno é html
-            <a key={post.slug} href="#">
+            <Link href={`/posts/${post.slug}`}>
+            <a key={post.slug}>
               <time>{post.updatedAt}</time>
               <strong>{post.title}</strong>
               <p>{post.excerpt}</p>
             </a>
+            </Link>
           ))}
         </div>
       </main>
@@ -65,7 +68,7 @@ export const getStaticProps: GetStaticProps = async () => {
   })
 
   // console.log(JSON.stringify(response, null, 2));
-  console.log(posts)
+  //console.log(posts)
 
   return { 
     props: { posts }
